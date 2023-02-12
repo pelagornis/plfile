@@ -1,14 +1,26 @@
 import Foundation
 
 public extension PLFile {
-    struct File {}
-    struct Folder {}
-}
+    struct File: DirectoryPath {
+        public static var directoryType: DirectoryType {
+            return .file
+        }
 
-/// Need
-/// Type : File Folder : 명령어 둘다 달라야 해서 따로 Struct로 만듦
-///
-/// File: 작성, 수정, 삭제... 등등
-///
-/// Folder: 생성, 현재 폴더 위치 ... 등등
-///
+        public let storage: Storage<PLFile.File>
+
+        public init(storage: Storage<PLFile.File>) {
+            self.storage = storage
+        }
+    }
+    struct Folder: DirectoryPath {
+        public static var directoryType: DirectoryType {
+            return .folder
+        }
+
+        public let storage: Storage<PLFile.Folder>
+
+        public init(storage: Storage<PLFile.Folder>) {
+            self.storage = storage
+        }
+    }
+}

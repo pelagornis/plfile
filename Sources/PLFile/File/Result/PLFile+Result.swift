@@ -1,8 +1,12 @@
-//
-//  File.swift
-//  
-//
-//  Created by Ji-hoon Ahn on 2023/02/08.
-//
-
 import Foundation
+
+public extension PLFile {
+    enum Result {
+        case success
+        case failure(path: String, message: String)
+    }
+}
+
+public extension PLFile.Result {
+    
+}
