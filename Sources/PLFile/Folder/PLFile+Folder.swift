@@ -17,7 +17,5 @@ extension PLFile.Folder {
 }
 
 extension PLFile.Folder {
-    func write() {
-        
-    }
+
 }
