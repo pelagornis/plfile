@@ -2,7 +2,6 @@ import Foundation
 
 /// Manage the path of the PLFile.
 public struct Path {
-    
     /// root path
     public static let root = Path("/")
     
@@ -77,7 +76,7 @@ public struct Path {
     }
     
     /// stored Path String value
-    public fileprivate(set) var rawValue: String
+    public var rawValue: String
     
     /// Safe Raw Value with Path
     var safeRawValue: String {
@@ -106,7 +105,7 @@ public struct Path {
     }
     
     /// Initalizer with swift path
-    public init(_ path: String) {
+    public init(_ path: String, _ fileManager: FileManager = .default) {
         self.rawValue = path
     }
 }
