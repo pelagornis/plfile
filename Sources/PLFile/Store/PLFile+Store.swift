@@ -48,21 +48,31 @@ extension Store {
 }
 
 extension Store where fileSystem == PLFile.Folder {
+    /// make Child Sequence
+    func makeChildSequence<T: FileSystem>() -> PLFile.Folder.ChildSequence<T> {
+        return PLFile.Folder.ChildSequence(
+            folder: PLFile.Folder(store: self),
+            fileManager: fileManager,
+            recursive: false,
+            includeStatus: false
+        )
+    }
+    
     /// subfolder information
-    func subfolder(at folderPath: String) throws -> PLFile.Folder {
-        let folderPath = path.rawValue + folderPath.removeSafePrefix("/")
+    func subfolder(at folderPath: Path) throws -> PLFile.Folder {
+        let folderPath = path.rawValue + folderPath.rawValue.removeSafePrefix("/")
         let store = Store(path: Path(folderPath), fileManager: fileManager)
         return PLFile.Folder(store: store)
     }
     /// file information
-    func file(at filePath: String) throws -> PLFile.File {
-        let filePath = path.rawValue + filePath.removeSafePrefix("/")
+    func file(at filePath: Path) throws -> PLFile.File {
+        let filePath = path.rawValue + filePath.rawValue.removeSafePrefix("/")
         let store = Store<PLFile.File>(path: Path(filePath), fileManager: fileManager)
         return PLFile.File(store: store)
     }
     /// create subfolder to path
-    func createSubfolder(at folderPath: String) throws -> PLFile.Folder {
-        let folderPath = path.rawValue + folderPath.removeSafePrefix("/")
+    func createSubfolder(at folderPath: Path) throws -> PLFile.Folder {
+        let folderPath = path.rawValue + folderPath.rawValue.removeSafePrefix("/")
         if folderPath == path.rawValue { throw PLFileError.emptyPath(path: path) }
         do {
             try fileManager.createDirectory(
@@ -76,8 +86,8 @@ extension Store where fileSystem == PLFile.Folder {
         }
     }
     /// create File to path
-    func createFile(at filePath: String, contents: Data? = nil) throws -> PLFile.File {
-        let filePath = path.rawValue + filePath.removeSafePrefix("/")
+    func createFile(at filePath: Path, contents: Data? = nil) throws -> PLFile.File {
+        let filePath = path.rawValue + filePath.rawValue.removeSafePrefix("/")
         let parentPath = Path(filePath).parents.rawValue
         if parentPath != path.rawValue {
             do {

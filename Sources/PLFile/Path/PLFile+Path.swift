@@ -18,11 +18,6 @@ public struct Path {
         return Path((self.rawValue as NSString).resolvingSymlinksInPath)
     }
     
-    /// fileName finding
-    public var fileName: String {
-        return self.absolutePath.pathComponent.last?.rawValue ?? ""
-    }
-    
     /// absolute path
     public var absolutePath: Path {
         if rawValue.hasPrefix("/") {
@@ -110,8 +105,8 @@ public struct Path {
     }
 }
 
+//MARK: - subscript
 extension Path {
-    
     /// Path Subscript
     public subscript(_ position: Int) -> Path {
         let component = pathComponent
