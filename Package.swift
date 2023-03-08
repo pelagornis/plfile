@@ -14,12 +14,6 @@ let package = Package(
         .target(
             name: "PLFile",
             dependencies: []),
-        .executableTarget(
-            name: "PLFileExample",
-            dependencies: [
-                .target(name: "PLFile")
-            ]
-        ),
         .testTarget(
             name: "PLFileTests",
             dependencies: ["PLFile"]),
