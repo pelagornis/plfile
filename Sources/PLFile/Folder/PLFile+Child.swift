@@ -99,20 +99,22 @@ extension PLFile.Folder.ChildIterator: IteratorProtocol {
         }
         
         let childPath = folder.store.path.rawValue + name.removeSafePrefix("/")
-        let childStore = Store<Child> (path: Path(childPath), fileManager: fileManager)
+        let childStore = try? Store<Child> (path: Path(childPath), fileManager: fileManager)
         let child = childStore as? Child
         
         if recursive {
-            let childFolder = (child as? PLFile.Folder) ?? (PLFile.Folder(store: Store(path: Path(childPath), fileManager: fileManager)))
+            let childFolder = (child as? PLFile.Folder) ?? (try? PLFile.Folder(store: Store(path: Path(childPath), fileManager: fileManager)))
             
-            let iteratorItem = PLFile.Folder.ChildIterator<Child> (
-                folder: childFolder,
-                fileManager: fileManager,
-                recursive: true,
-                includeStatus: includeStatus,
-                reversingTopLevel: false
-            )
-            itemIterators.append(iteratorItem)
+            if let childFolder = childFolder {
+                let iteratorItem = PLFile.Folder.ChildIterator<Child> (
+                    folder: childFolder,
+                    fileManager: fileManager,
+                    recursive: true,
+                    includeStatus: includeStatus,
+                    reversingTopLevel: false
+                )
+                itemIterators.append(iteratorItem)
+            }
         }
         
         return child ?? next()

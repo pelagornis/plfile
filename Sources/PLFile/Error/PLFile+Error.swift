@@ -4,6 +4,7 @@ import Foundation
 public enum PLFileError: Error {
     /// file
     case fileCreateError(path: Path)
+    case filePathEmpty(path: Path)
     /// folder
     case folderCreateError(path: Path, error: Error)
     /// path
@@ -18,7 +19,8 @@ public enum PLFileError: Error {
     case moveError(path: Path, error: Error)
     case copyError(path: Path, error: Error)
     case deleteError(path: Path, error: Error)
-
+    /// missing
+    case missing(path: Path)
 }
 
 extension PLFileError {
@@ -36,7 +38,9 @@ extension PLFileError {
         case .writeStringEncodingFailed,
                 .fileCreateError,
                 .cannotRename,
-                .emptyPath:
+                .emptyPath,
+                .filePathEmpty,
+                .missing:
             return nil
         }
     }
@@ -48,6 +52,8 @@ extension PLFileError {
             return "Could not write to file -> \(path)"
         case let .fileCreateError(path):
             return "Could not Create File -> \(path)"
+        case let .filePathEmpty(path):
+            return "File Path is Empty -> \(path)"
         case let .folderCreateError(path, _):
             return "Could not Create Folder -> \(path)"
         case let .writeStringEncodingFailed(path):
@@ -62,8 +68,10 @@ extension PLFileError {
             return "Could not copy to file -> \(path)"
         case let .deleteError(path, _):
             return "Could not delete to file -> \(path)"
-        case let .cannotRename(path) :
+        case let .cannotRename(path):
             return "Could not rename -> \(path)"
+        case let .missing(path):
+            return "Could not find missing -> \(path)"
         }
     }
 }

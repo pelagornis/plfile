@@ -37,8 +37,8 @@ public extension FileSystem {
         return store.attributes[.modificationDate] as? Date
     }
     /// Initalizer path inside FileSystem
-    init(path: Path) {
-        self.init(store: Store(
+    init(path: Path) throws {
+        try self.init(store: Store(
             path: path,
             fileManager: .default
         ))
@@ -64,7 +64,7 @@ public extension FileSystem {
     func copy(to folder: PLFile.Folder) throws -> Self {
         let path = folder.store.path.rawValue + name
         try store.copy(to: path)
-        return Self(path: Path(path))
+        return try Self(path: Path(path))
     }
     /// Delete this FileSystem.
     func delete() throws {
@@ -72,7 +72,7 @@ public extension FileSystem {
     }
     /// FileSystem `FileManager` Setting
     func managedBy(_ manager: FileManager) throws -> Self {
-        return Self(store: Store(
+        return try Self(store: Store(
             path: store.path,
             fileManager: manager
         ))

@@ -17,7 +17,7 @@ extension PLFile.Folder {
     }
     /// system Temporary
     public static var temporary: PLFile.Folder {
-        return PLFile.Folder(path: Path(NSTemporaryDirectory()))
+        return try! PLFile.Folder(path: Path(NSTemporaryDirectory()))
     }
     
     /// sequence contain all of this folder subfolder
