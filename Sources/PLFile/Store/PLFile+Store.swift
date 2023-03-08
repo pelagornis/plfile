@@ -57,7 +57,7 @@ extension Store {
         }
         if path.rawValue.hasPrefix("~") {
             let home = ProcessInfo.processInfo.environment["HOME"]!
-            path = Path(home + path.rawValue.dropFirst())
+            path.rawValue = home + path.rawValue.dropFirst()
         }
         
         while let parentRange = path.rawValue.range(of: "../") {
@@ -81,8 +81,8 @@ extension Store {
         if path.rawValue.isEmpty {
             path = Path(fileManager.currentDirectoryPath)
         }
-        if path.rawValue.hasPrefix("/") {
-            path = Path(path.rawValue + "/")
+        if !path.rawValue.hasPrefix("/") {
+            path.rawValue += "/"
         }
     }
     
