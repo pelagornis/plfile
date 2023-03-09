@@ -36,7 +36,8 @@ Path.temporary
 
 Create, Write file and Folder!
 ```swift
-let folder = try! PLFile.Folder(path: .home)
+let path = Path.home
+let folder = try! PLFile.Folder(path: path)
 let file = try! folder.createFile(at: Path("test.swift"))
 try! file.write("print(1)")
 ```
