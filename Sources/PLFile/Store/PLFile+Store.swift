@@ -59,7 +59,6 @@ extension Store {
             let home = ProcessInfo.processInfo.environment["HOME"]!
             path.rawValue = home + path.rawValue.dropFirst()
         }
-        
         while let parentRange = path.rawValue.range(of: "../") {
             let folderPath = path.rawValue[..<parentRange.lowerBound]
             let parentsPath = Path(String(folderPath)).parents
@@ -81,7 +80,7 @@ extension Store {
         if path.rawValue.isEmpty {
             path = Path(fileManager.currentDirectoryPath)
         }
-        if !path.rawValue.hasPrefix("/") {
+        if !path.rawValue.hasSuffix("/") {
             path.rawValue += "/"
         }
     }
