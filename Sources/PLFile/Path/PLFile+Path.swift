@@ -8,6 +8,9 @@ public struct Path {
     /// home path
     public static var home = Path("~")
     
+    /// system Temporary path
+    public static var temporary = Path(NSTemporaryDirectory())
+    
     /// standardized path
     public var standardized: Path {
         return Path((self.rawValue as NSString).standardizingPath)

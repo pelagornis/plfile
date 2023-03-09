@@ -15,11 +15,7 @@ extension PLFile.Folder {
     public static var type: PLFileType {
         return .folder
     }
-    /// system Temporary
-    public static var temporary: PLFile.Folder {
-        return try! PLFile.Folder(path: Path(NSTemporaryDirectory()))
-    }
-    
+
     /// sequence contain all of this folder subfolder
     var subfolders: ChildSequence<PLFile.Folder> {
         return store.makeChildSequence()
