@@ -1,5 +1,8 @@
 # PLFile
 
+![Swift](https://img.shields.io/badge/Swift-5.8-orange.svg)
+
+
 Pelagornis File Management Library 📁
 
 ## Installation
@@ -8,7 +11,7 @@ PLFile was deployed as Swift Package Manager. Package to install in a project. A
 let package = Package(
     ...
     dependencies: [
-        .package(url: "https://github.com/Pelagornis/PLFile.git", from: "1.0.0")
+        .package(url: "https://github.com/Pelagornis/PLFile.git", from: "1.0.1")
     ],
     ...
 )
