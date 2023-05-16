@@ -24,6 +24,11 @@ Then import the PLFile from thr location you want to use.
 import PLFile
 ```
 
+## Documentation
+The documentation for releases and ``main`` are available here:
+- [``main``](https://pelagornis.github.io/PLFile/main/documentation/plfile)
+
+
 ## Using
 
 Path Setting.
