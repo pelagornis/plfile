@@ -2,26 +2,26 @@ import Foundation
 
 /// Manage the path of the PLFile.
 public struct Path {
-    /// root path
+    /// Root path.
     public static let root = Path("/")
-    
-    /// home path
+
+    /// Home path.
     public static var home = Path("~")
-    
-    /// system Temporary path
+
+    /// System Temporary path.
     public static var temporary = Path(NSTemporaryDirectory())
-    
-    /// standardized path
+
+    /// Standardized path
     public var standardized: Path {
         return Path((self.rawValue as NSString).standardizingPath)
     }
-    
-    /// resolving all symlinks path
+
+    /// Resolving all symlinks path.
     public var resolved: Path {
         return Path((self.rawValue as NSString).resolvingSymlinksInPath)
     }
-    
-    /// absolute path
+
+    /// Absolute path.
     public var absolutePath: Path {
         if rawValue.hasPrefix("/") {
             return self.standardized
@@ -29,8 +29,8 @@ public struct Path {
             return Path(Path.current.rawValue + self.rawValue).standardized
         }
     }
-    
-    /// parent path
+
+    /// Parent path.
     public var parents: Path {
         if rawValue.hasPrefix("/") {
             return Path((absolutePath.rawValue as NSString).deletingLastPathComponent)
@@ -47,8 +47,8 @@ public struct Path {
             }
         }
     }
-    
-    /// path component
+
+    /// Path component.
     public var pathComponent: [Path] {
         if rawValue.isEmpty || rawValue == "." { return .init() }
         if rawValue.hasPrefix("/") {
@@ -63,8 +63,8 @@ public struct Path {
             return safeComponents(safeComponent)
         }
     }
-    
-    /// current path
+
+    /// Current path
     public static var current: Path {
         get {
             return Path(FileManager.default.currentDirectoryPath)
@@ -72,16 +72,16 @@ public struct Path {
             FileManager.default.changeCurrentDirectoryPath(newValue.safeRawValue)
         }
     }
-    
-    /// stored Path String value
+
+    /// Stored Path String value.
     public var rawValue: String
-    
-    /// Safe Raw Value with Path
+
+    /// Safe Raw Value with path.
     var safeRawValue: String {
         return rawValue.isEmpty ? "." : rawValue
     }
-    
-    /// resolving path '..'
+
+    /// Resolving path '..'.
     fileprivate func safeComponents(_ component: [Path]) -> [Path] {
         var result = false
         let count = component.count
@@ -96,13 +96,13 @@ public struct Path {
         }
         return result ? safeComponents(safecomponent) : safecomponent
     }
-    
-    /// Initalizer
+
+    /// Initalizer.
     public init() {
         self = .root
     }
-    
-    /// Initalizer with swift path
+
+    /// Initalizer with swift path.
     public init(_ path: String, _ fileManager: FileManager = .default) {
         self.rawValue = path
     }
@@ -110,7 +110,7 @@ public struct Path {
 
 //MARK: - subscript
 extension Path {
-    /// Path Subscript
+    /// A subscript that identifies the position of the path.
     public subscript(_ position: Int) -> Path {
         let component = pathComponent
         if position >= component.count || position < 0 {
@@ -123,7 +123,7 @@ extension Path {
             return result
         }
     }
-    
+    /// A subscript that identifies the bound out of the path.
     public subscript(_ bounds: Range<Int>) -> Path {
         let component = self.pathComponent
         if bounds.upperBound >= component.count || bounds.lowerBound < 0 {
@@ -135,5 +135,4 @@ extension Path {
         }
         return result
     }
-    
 }

@@ -1,5 +1,4 @@
-// swift-tools-version: 5.8
-
+// swift-tools-version: 5.7
 import PackageDescription
 
 let package = Package(
@@ -10,13 +9,14 @@ let package = Package(
             name: "PLFile",
             targets: ["PLFile"]),
     ],
-    dependencies: [],
     targets: [
         .target(
             name: "PLFile",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "PLFileTests",
-            dependencies: ["PLFile"]),
+            dependencies: ["PLFile"]
+        )
     ]
 )

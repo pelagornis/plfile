@@ -1,30 +1,34 @@
 import Foundation
 
-/// error can be thrown by PLFile
+/// Error can be thrown by PLFile
 public enum PLFileError: Error {
-    /// file
+    /// File Create Error
     case fileCreateError(path: Path)
+    /// Verify that file path is empty.
     case filePathEmpty(path: Path)
-    /// folder
+    /// Folder Create Error
     case folderCreateError(path: Path, error: Error)
-    /// path
+    /// Verify that path is empty.
     case emptyPath(path: Path)
-    // write
+    /// Write Failed Error.
     case writeFailed(path: Path, error: Error)
+    /// Write String Encoding Error.
     case writeStringEncodingFailed(path: Path)
-    // read
+    /// Read Failed Error.
     case readFailed(path: Path, error: Error)
-    /// fileSystem Error
+    /// Can Not Renamed Error.
     case cannotRename(path: Path)
+    /// Move Failed Error
     case moveError(path: Path, error: Error)
+    /// Copy Failed Error
     case copyError(path: Path, error: Error)
+    /// Delete Failed Error
     case deleteError(path: Path, error: Error)
-    /// missing
+    /// Missing Error
     case missing(path: Path)
 }
 
 extension PLFileError {
-    
     /// PLFile Error Return Error Context
     public var error: Error? {
         switch self {
@@ -44,7 +48,6 @@ extension PLFileError {
             return nil
         }
     }
-    
     /// PLFile Error Reason Message
     public var message: String {
         switch self {
@@ -78,7 +81,7 @@ extension PLFileError {
 
 //MARK: - CustomStringConvertible
 extension PLFileError: CustomStringConvertible {
-    /// representation of `self`
+    /// Representation of `self`
     public var description: String {
         return String(describing: type(of: self)) + ": (\(message)"
     }
@@ -86,8 +89,7 @@ extension PLFileError: CustomStringConvertible {
 
 //MARK: - CustomDebugStringConvertible
 extension PLFileError: CustomDebugStringConvertible {
-    
-    /// representation of instance, suitable for debugging
+    /// Representation of instance, suitable for debugging
     public var debugDescription: String {
         guard let error = error else {
             return self.debugDescription

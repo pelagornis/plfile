@@ -1,8 +1,12 @@
 import Foundation
 
+/// Can use the functions of the file system as a key feature of PLFile.
 public protocol FileSystem: Equatable, CustomStringConvertible {
+    /// Specifies whether it is a function for File or Folder.
     static var type: PLFileType { get }
+    /// Store values set within the file system are available.
     var store: Store<Self> { get }
+    /// Initializes the Store value.
     init(store: Store<Self>)
 }
 

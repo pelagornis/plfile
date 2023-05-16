@@ -1,6 +1,7 @@
 import Foundation
 
 extension PLFile {
+    /// Folder functionality in PLFile
     public struct Folder: FileSystem {
         public var store: Store<PLFile.Folder>
         

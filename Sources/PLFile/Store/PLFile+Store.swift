@@ -1,22 +1,23 @@
 import Foundation
 
+/// A common part of the File and Folder functionality that allows you to set up the required paths and FileManager that the file system should use.
 public final class Store<fileSystem: FileSystem> {
     var path: Path
     private let fileManager: FileManager
-    
+
     init(path: Path, fileManager: FileManager) throws {
         self.path = path
         self.fileManager = fileManager
         try translatePath()
     }
-    
+
     var attributes: [FileAttributeKey : Any] {
         return (try? fileManager.attributesOfItem(atPath: path.rawValue)) ?? [:]
     }
 }
 
 extension Store {
-    /// move FileSystem
+    /// Move FileSystem.
     func move(to newPath: String) throws {
         do {
             try fileManager.moveItem(atPath: path.rawValue, toPath: newPath)
@@ -30,7 +31,7 @@ extension Store {
             throw PLFileError.moveError(path: path, error: error)
         }
     }
-    /// copy FileSystem
+    /// Copy FileSystem.
     func copy(to newPath: String) throws {
         do {
             try fileManager.copyItem(atPath: path.rawValue, toPath: newPath)
@@ -38,7 +39,7 @@ extension Store {
             throw PLFileError.copyError(path: path, error: error)
         }
     }
-    /// delete FileSystem
+    /// Delete FileSystem.
     func delete() throws {
         do {
             try fileManager.removeItem(atPath: path.rawValue)
@@ -46,8 +47,7 @@ extension Store {
             throw PLFileError.deleteError(path: path, error: error)
         }
     }
-    
-    /// path translate
+    /// Path translate.
     private func translatePath() throws {
         switch fileSystem.type {
         case .file:
@@ -67,15 +67,14 @@ extension Store {
             path.rawValue.replaceSubrange(..<parentRange.upperBound, with: parentsPath.rawValue)
         }
         try filesystemExists()
-        
     }
-    
+    /// Verify that the store file is empty.
     private func storeFileEmpty() throws {
         if path.rawValue.isEmpty {
             throw PLFileError.filePathEmpty(path: path)
         }
     }
-    
+    /// Verify that the store folder is empty.
     private func storeFolderEmpty() throws {
         if path.rawValue.isEmpty {
             path = Path(fileManager.currentDirectoryPath)
@@ -84,7 +83,7 @@ extension Store {
             path.rawValue += "/"
         }
     }
-    
+    /// File System Exists.
     private func filesystemExists() throws {
         var isFolder: ObjCBool = false
         var fileSystemStatus: Bool = false
@@ -107,7 +106,7 @@ extension Store {
 }
 
 extension Store where fileSystem == PLFile.Folder {
-    /// make Child Sequence
+    /// Make Child Sequence.
     func makeChildSequence<T: FileSystem>() -> PLFile.Folder.ChildSequence<T> {
         return PLFile.Folder.ChildSequence(
             folder: PLFile.Folder(store: self),
@@ -117,19 +116,19 @@ extension Store where fileSystem == PLFile.Folder {
         )
     }
     
-    /// subfolder information
+    /// Subfolder information.
     func subfolder(at folderPath: Path) throws -> PLFile.Folder {
         let folderPath = path.rawValue + folderPath.rawValue.removeSafePrefix("/")
         let store = try Store(path: Path(folderPath), fileManager: fileManager)
         return PLFile.Folder(store: store)
     }
-    /// file information
+    /// File information
     func file(at filePath: Path) throws -> PLFile.File {
         let filePath = path.rawValue + filePath.rawValue.removeSafePrefix("/")
         let store = try Store<PLFile.File>(path: Path(filePath), fileManager: fileManager)
         return PLFile.File(store: store)
     }
-    /// create subfolder to path
+    /// Create subfolder to path.
     func createSubfolder(at folderPath: Path) throws -> PLFile.Folder {
         let folderPath = path.rawValue + folderPath.rawValue.removeSafePrefix("/")
         if folderPath == path.rawValue { throw PLFileError.emptyPath(path: path) }
@@ -144,7 +143,7 @@ extension Store where fileSystem == PLFile.Folder {
             throw PLFileError.folderCreateError(path: path, error: error)
         }
     }
-    /// create File to path
+    /// Create File to path.
     func createFile(at filePath: Path, contents: Data? = nil) throws -> PLFile.File {
         let filePath = path.rawValue + filePath.rawValue.removeSafePrefix("/")
         let parentPath = Path(filePath).parents.rawValue
