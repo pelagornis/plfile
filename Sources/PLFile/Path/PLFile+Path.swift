@@ -108,6 +108,18 @@ public struct Path {
     }
 }
 
+extension Path: ExpressibleByStringLiteral {
+    public init(stringLiteral value: StringLiteralType) {
+        self.init(value)
+    }
+    public init(unicodeScalarLiteral value: String) {
+        self.init(value)
+    }
+    public init(extendedGraphemeClusterLiteral value: String) {
+        self.init(value)
+    }
+}
+
 //MARK: - subscript
 extension Path {
     /// A subscript that identifies the position of the path.
