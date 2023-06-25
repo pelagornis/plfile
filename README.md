@@ -48,7 +48,7 @@ Create, Write file and Folder!
 ```swift
 let path = Path.home
 let folder = try! PLFile.Folder(path: path)
-let file = try! folder.createFile(at: Path("test.swift"))
+let file = try! folder.createFile(at: "test.swift")
 try! file.write("print(1)")
 ```
 
