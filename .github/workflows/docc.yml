@@ -50,7 +50,7 @@ jobs:
                 --target PLFile \
                 --output-path docs-out/"$tag" \
                 --transform-for-static-hosting \
-                --hosting-base-path /PLFile/"$tag" \
+                --hosting-base-path /plfile/"$tag" \
                     && echo "✅ Documentation generated for "$tag" release." \
                     || echo "⚠️ Documentation skipped for "$tag".";
             fi;
