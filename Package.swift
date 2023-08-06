@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "PLFile",
+    name: "plfile",
     platforms: [.macOS(.v10_15)],
     products: [
         .library(
@@ -10,7 +10,7 @@ let package = Package(
             targets: ["PLFile"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-docc-plugin.git", from: "1.2.0")
+        .package(url: "https://github.com/apple/swift-docc-plugin.git", from: "1.3.0")
     ],
     targets: [
         .target(
