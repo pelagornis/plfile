@@ -13,7 +13,7 @@ PLFile was deployed as Swift Package Manager. Package to install in a project. A
 let package = Package(
     ...
     dependencies: [
-        .package(url: "https://github.com/Pelagornis/PLFile.git", from: "1.0.1")
+        .package(url: "https://github.com/pelagornis/plfile.git", from: "1.0.3")
     ],
     ...
 )
@@ -26,7 +26,7 @@ import PLFile
 
 ## Documentation
 The documentation for releases and ``main`` are available here:
-- [``main``](https://pelagornis.github.io/PLFile/main/documentation/plfile)
+- [``main``](https://pelagornis.github.io/plfile/main/documentation/plfile)
 
 
 ## Using
