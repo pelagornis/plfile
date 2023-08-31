@@ -8,7 +8,7 @@ PLFile was deployed as Swift Package Manager. Package to install in a project. A
 let package = Package(
     ...
     dependencies: [
-        .package(url: "https://github.com/Pelagornis/PLFile.git", from: "1.0.2")
+        .package(url: "https://github.com/pelagornis/plfile.git", from: "1.0.4")
     ],
     ...
 )
@@ -25,7 +25,7 @@ PLFile offers the most commonly used Bash and ZSH, which in addition helps users
 Path Setting.
 
 ```swift
-let path = Path("/Users/ji-hoonahn/Desktop/") // example
+let path = Path("/Users/pelagornis/Desktop/") // example
 ```
 Easy access Path.
 ```swift
@@ -39,7 +39,7 @@ Easily create files and folders
 ```swift
 let path = Path.home
 let folder = try! PLFile.Folder(path: path)
-let file = try! folder.createFile(at: Path("test.swift"))
+let file = try! folder.createFile(at: "test.swift")
 try! file.write("print(1)")
 ```
 
