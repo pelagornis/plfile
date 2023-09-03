@@ -120,7 +120,7 @@ extension Path: ExpressibleByStringLiteral {
     }
 }
 
-//MARK: - subscript
+// MARK: - subscript
 extension Path {
     /// A subscript that identifies the position of the path.
     public subscript(_ position: Int) -> Path {
@@ -146,5 +146,13 @@ extension Path {
             result  = Path(result.rawValue + component[index].rawValue)
         }
         return result
+    }
+}
+
+// MARK: - Hashable
+extension Path: Hashable {
+    /// To compute the hash value of the path
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(rawValue)
     }
 }
