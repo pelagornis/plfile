@@ -37,4 +37,10 @@ final class PLFileTests: XCTestCase {
         try! originFolder.move(to: targetFolder)
         XCTAssertEqual(originFolder.store.path.rawValue, folder.store.path.rawValue + "folderB/folderA/" )
     }
+    
+    func testingPathStringLiteralConvertible() {
+        let user: Path = "/Users"
+        let userPath = Path("/Users")
+        XCTAssertEqual(user, userPath)
+    }
 }
