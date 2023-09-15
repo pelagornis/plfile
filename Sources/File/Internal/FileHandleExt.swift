@@ -1,6 +1,6 @@
 import Foundation
 
-public extension FileHandle {
+extension FileHandle {
 
     /**
      Seeks to the end of the file handle.
@@ -12,11 +12,7 @@ public extension FileHandle {
     func seekToEndFactory() -> UInt64 {
         if #available(macOS 10.15.4, *) {
             do {
-                if #available(iOS 13.4, *) {
-                    return try self.seekToEnd()
-                } else {
-                    return 0
-                }
+                return try self.seekToEnd()
             } catch {
                 return 0
             }
@@ -35,11 +31,7 @@ public extension FileHandle {
     func writeFactory(_ data: Data) {
         if #available(macOS 10.15.4, *) {
             do {
-                if #available(iOS 13.4, *) {
-                    try self.write(contentsOf: data)
-                } else {
-                    return
-                }
+                try self.write(contentsOf: data)
             } catch {
                 return
             }
@@ -56,15 +48,10 @@ public extension FileHandle {
     func closeFileFactory() {
         if #available(macOS 10.15, *) {
             do {
-                if #available(iOS 13.0, *) {
-                    try self.close()
-                } else {
-                    return
-                }
+                try self.close()
             } catch { return }
         } else {
             self.closeFile()
         }
     }
 }
-

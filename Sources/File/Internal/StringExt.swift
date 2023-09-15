@@ -1,3 +1,5 @@
+import Foundation
+
 extension String {
   /**
    Appends a suffix to the string, but only if the string does not already end with that suffix.
