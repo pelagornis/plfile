@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/github/license/pelagornis/plfile)](https://github.com/pelagornis/plfile/blob/main/LICENSE)
 ![Platform](https://img.shields.io/badge/platforms-macOS%2010.5-red)
 
-Pelagornis File Management Library 📁
+📁 Pelagornis File Management Library
 
 ## Installation
 PLFile was deployed as Swift Package Manager. Package to install in a project. Add as a dependent item within the swift manifest.
