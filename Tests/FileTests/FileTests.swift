@@ -43,4 +43,32 @@ final class FileTests: XCTestCase {
         let userPath = Path("/Users")
         XCTAssertEqual(user, userPath)
     }
+
+    func testingPathRoot() {
+        let root = Path.root
+        let pathRoot: Path = "/"
+        XCTAssertEqual(root, pathRoot)
+    }
+
+    func testingPathCurrent() {
+        let oldCurrent: Path = .current
+        let newCurrent: Path = .userTemporary
+        XCTAssertNotEqual(oldCurrent, newCurrent)
+        Path.current = newCurrent
+        XCTAssertNotEqual(Path.current, oldCurrent)
+    }
+    
+    func testingPathHome() {
+        let home = Path.home
+        let pathHome = Path("~")
+        XCTAssertEqual(home, pathHome)
+    }
+
+    func testingPathDocuments() {
+        XCTAssertNotEqual(Path.documents, Path())
+    }
+
+    func testingPathLibrary() {
+        XCTAssertNotEqual(Path.library, Path())
+    }
 }
