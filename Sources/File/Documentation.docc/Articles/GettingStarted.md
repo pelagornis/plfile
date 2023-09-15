@@ -29,10 +29,12 @@ let path = Path("/Users/pelagornis/Desktop/") // example
 ```
 Easy access Path.
 ```swift
-Path.root
-Path.home
 Path.current
+Path.root
+Path.library
 Path.temporary
+Path.home
+Path.documents
 ```
 Easily create files and folders
 
