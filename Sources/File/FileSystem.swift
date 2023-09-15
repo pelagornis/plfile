@@ -61,11 +61,11 @@ public extension FileSystem {
         try store.move(to: store.path.parents.rawValue)
     }
     /// Move this File System to a new parents Folder
-    func move(to newParent: PLFile.Folder) throws {
+    func move(to newParent: Folder) throws {
         try store.move(to: newParent.store.path.rawValue + name)
     }
     /// Copy the content of this File System to a given folder
-    func copy(to folder: PLFile.Folder) throws -> Self {
+    func copy(to folder: Folder) throws -> Self {
         let path = folder.store.path.rawValue + name
         try store.copy(to: path)
         return try Self(path: Path(path))
