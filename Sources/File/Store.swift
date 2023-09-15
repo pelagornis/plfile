@@ -28,7 +28,7 @@ extension Store {
                 path.rawValue = newPath.appendSafeSuffix("/")
             }
         } catch {
-            throw PLFileError.moveError(path: path, error: error)
+            throw FileError.moveError(path: path, error: error)
         }
     }
     /// Copy FileSystem.
@@ -36,7 +36,7 @@ extension Store {
         do {
             try fileManager.copyItem(atPath: path.rawValue, toPath: newPath)
         } catch {
-            throw PLFileError.copyError(path: path, error: error)
+            throw FileError.copyError(path: path, error: error)
         }
     }
     /// Delete FileSystem.
@@ -44,7 +44,7 @@ extension Store {
         do {
             try fileManager.removeItem(atPath: path.rawValue)
         } catch {
-            throw PLFileError.deleteError(path: path, error: error)
+            throw FileError.deleteError(path: path, error: error)
         }
     }
     /// Path translate.
@@ -71,7 +71,7 @@ extension Store {
     /// Verify that the store file is empty.
     private func storeFileEmpty() throws {
         if path.rawValue.isEmpty {
-            throw PLFileError.filePathEmpty(path: path)
+            throw FileError.filePathEmpty(path: path)
         }
     }
     /// Verify that the store folder is empty.
@@ -100,16 +100,16 @@ extension Store {
         }
         
         guard fileSystemStatus else {
-            throw PLFileError.missing(path: path)
+            throw FileError.missing(path: path)
         }
     }
 }
 
-extension Store where fileSystem == PLFile.Folder {
+extension Store where fileSystem == Folder {
     /// Make Child Sequence.
-    func makeChildSequence<T: FileSystem>() -> PLFile.Folder.ChildSequence<T> {
-        return PLFile.Folder.ChildSequence(
-            folder: PLFile.Folder(store: self),
+    func makeChildSequence<T: FileSystem>() -> Folder.ChildSequence<T> {
+        return Folder.ChildSequence(
+            folder: Folder(store: self),
             fileManager: fileManager,
             recursive: false,
             includeStatus: false
@@ -117,34 +117,34 @@ extension Store where fileSystem == PLFile.Folder {
     }
     
     /// Subfolder information.
-    func subfolder(at folderPath: Path) throws -> PLFile.Folder {
+    func subfolder(at folderPath: Path) throws -> Folder {
         let folderPath = path.rawValue + folderPath.rawValue.removeSafePrefix("/")
         let store = try Store(path: Path(folderPath), fileManager: fileManager)
-        return PLFile.Folder(store: store)
+        return Folder(store: store)
     }
     /// File information
-    func file(at filePath: Path) throws -> PLFile.File {
+    func file(at filePath: Path) throws -> File {
         let filePath = path.rawValue + filePath.rawValue.removeSafePrefix("/")
-        let store = try Store<PLFile.File>(path: Path(filePath), fileManager: fileManager)
-        return PLFile.File(store: store)
+        let store = try Store<File>(path: Path(filePath), fileManager: fileManager)
+        return File(store: store)
     }
     /// Create subfolder to path.
-    func createSubfolder(at folderPath: Path) throws -> PLFile.Folder {
+    func createSubfolder(at folderPath: Path) throws -> Folder {
         let folderPath = path.rawValue + folderPath.rawValue.removeSafePrefix("/")
-        if folderPath == path.rawValue { throw PLFileError.emptyPath(path: path) }
+        if folderPath == path.rawValue { throw FileError.emptyPath(path: path) }
         do {
             try fileManager.createDirectory(
                 atPath: folderPath,
                 withIntermediateDirectories: true
             )
             let store = try Store(path: Path(folderPath), fileManager: fileManager)
-            return PLFile.Folder(store: store)
+            return Folder(store: store)
         } catch {
-            throw PLFileError.folderCreateError(path: path, error: error)
+            throw FileError.folderCreateError(path: path, error: error)
         }
     }
     /// Create File to path.
-    func createFile(at filePath: Path, contents: Data? = nil) throws -> PLFile.File {
+    func createFile(at filePath: Path, contents: Data? = nil) throws -> File {
         let filePath = path.rawValue + filePath.rawValue.removeSafePrefix("/")
         let parentPath = Path(filePath).parents.rawValue
         if parentPath != path.rawValue {
@@ -154,13 +154,13 @@ extension Store where fileSystem == PLFile.Folder {
                     withIntermediateDirectories: true
                 )
             } catch {
-                throw PLFileError.folderCreateError(path: Path(parentPath), error: error)
+                throw FileError.folderCreateError(path: Path(parentPath), error: error)
             }
         }
         guard fileManager.createFile(atPath: filePath, contents: contents) else {
-            throw PLFileError.fileCreateError(path: Path(filePath))
+            throw FileError.fileCreateError(path: Path(filePath))
         }
-        let store = try Store<PLFile.File>(path: Path(filePath), fileManager: fileManager)
-        return PLFile.File(store: store)
+        let store = try Store<File>(path: Path(filePath), fileManager: fileManager)
+        return File(store: store)
     }
 }

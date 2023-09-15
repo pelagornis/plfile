@@ -12,7 +12,11 @@ public extension FileHandle {
     func seekToEndFactory() -> UInt64 {
         if #available(macOS 10.15.4, *) {
             do {
-                return try self.seekToEnd()
+                if #available(iOS 13.4, *) {
+                    return try self.seekToEnd()
+                } else {
+                    return 0
+                }
             } catch {
                 return 0
             }
@@ -31,7 +35,11 @@ public extension FileHandle {
     func writeFactory(_ data: Data) {
         if #available(macOS 10.15.4, *) {
             do {
-                try self.write(contentsOf: data)
+                if #available(iOS 13.4, *) {
+                    try self.write(contentsOf: data)
+                } else {
+                    return
+                }
             } catch {
                 return
             }
@@ -48,7 +56,11 @@ public extension FileHandle {
     func closeFileFactory() {
         if #available(macOS 10.15, *) {
             do {
-                try self.close()
+                if #available(iOS 13.0, *) {
+                    try self.close()
+                } else {
+                    return
+                }
             } catch { return }
         } else {
             self.closeFile()

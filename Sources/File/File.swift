@@ -1,18 +1,16 @@
 import Foundation
 
-extension PLFile {
     /// File functionality in PLFile
-    public struct File: FileSystem {
-        public var store: Store<PLFile.File>
-        
-        public init(store: Store<PLFile.File>) {
-            self.store = store
-        }
+public struct File: FileSystem {
+    public var store: Store<File>
+
+    public init(store: Store<File>) {
+        self.store = store
     }
 }
 
 /// Property
-extension PLFile.File {
+extension File {
     /// PLFile File Type
     public static var type: PLFileType {
         return .file
@@ -20,21 +18,21 @@ extension PLFile.File {
 }
 
 /// Method
-public extension PLFile.File {
+public extension File {
     
     /// write binary data in the file and replace current contexts
     func write(_ data: Data) throws {
         do {
             try data.write(to: url)
         } catch {
-            throw PLFileError.writeFailed(path: store.path, error: error)
+            throw FileError.writeFailed(path: store.path, error: error)
         }
     }
 
     /// write new string into the file and replace current contexts.
     func write(_ string: String, encoding: String.Encoding = .utf8) throws {
         guard let data = string.data(using: encoding) else {
-            throw PLFileError.writeStringEncodingFailed(path: store.path)
+            throw FileError.writeStringEncodingFailed(path: store.path)
         }
         return try write(data)
     }
@@ -47,14 +45,14 @@ public extension PLFile.File {
             handler.writeFactory(data)
             handler.closeFileFactory()
         } catch {
-            throw PLFileError.writeFailed(path: store.path, error: error)
+            throw FileError.writeFailed(path: store.path, error: error)
         }
     }
 
     /// append string into the file, exist contexts
     func append(_ string: String, encoding: String.Encoding = .utf8) throws {
         guard let data = string.data(using: encoding) else {
-            throw PLFileError.writeStringEncodingFailed(path: store.path)
+            throw FileError.writeStringEncodingFailed(path: store.path)
         }
         return try append(data)
     }
@@ -64,7 +62,7 @@ public extension PLFile.File {
         do {
             return try Data(contentsOf: url)
         } catch {
-            throw PLFileError.readFailed(path: store.path, error: error)
+            throw FileError.readFailed(path: store.path, error: error)
         }
     }
 }
@@ -72,7 +70,7 @@ public extension PLFile.File {
 #if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import AppKit
 
-public extension PLFile.File {
+public extension File {
     /// open file
     func open() {
         NSWorkspace.shared.open(URL(fileURLWithPath: store.path.rawValue))

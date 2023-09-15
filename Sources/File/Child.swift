@@ -1,15 +1,15 @@
 import Foundation
 
 //MARK: - Child
-public extension PLFile.Folder {
+public extension Folder {
     struct ChildSequence<Child: FileSystem> {
-        let folder: PLFile.Folder
+        let folder: Folder
         let fileManager: FileManager
         var recursive: Bool
         var includeStatus: Bool
     }
     struct ChildIterator<Child: FileSystem> {
-        private let folder: PLFile.Folder
+        private let folder: Folder
         private let fileManager: FileManager
         private let recursive: Bool
         private let includeStatus: Bool
@@ -19,7 +19,7 @@ public extension PLFile.Folder {
         private lazy var itemNames = loadingItemNames()
         
         init(
-            folder: PLFile.Folder,
+            folder: Folder,
             fileManager: FileManager,
             recursive: Bool,
             includeStatus: Bool,
@@ -35,9 +35,9 @@ public extension PLFile.Folder {
 }
 
 //MARK: - Child Sequence
-extension PLFile.Folder.ChildSequence: Sequence {
-    public func makeIterator() -> PLFile.Folder.ChildIterator<Child>  {
-        return PLFile.Folder.ChildIterator(
+extension Folder.ChildSequence: Sequence {
+    public func makeIterator() -> Folder.ChildIterator<Child>  {
+        return Folder.ChildIterator(
             folder: folder,
             fileManager: fileManager,
             recursive: recursive,
@@ -47,29 +47,29 @@ extension PLFile.Folder.ChildSequence: Sequence {
     }
 }
 
-extension PLFile.Folder.ChildSequence: CustomStringConvertible {
+extension Folder.ChildSequence: CustomStringConvertible {
     public var description: String {
         return lazy.map({ $0.description }).joined(separator: "\n")
     }
 }
 
-public extension PLFile.Folder.ChildSequence {
+public extension Folder.ChildSequence {
     
-    var recursiveStatus: PLFile.Folder.ChildSequence<Child> {
+    var recursiveStatus: Folder.ChildSequence<Child> {
         var sequence = self
         sequence.recursive = true
         return sequence
     }
-    var includingStatus: PLFile.Folder.ChildSequence<Child> {
+    var includingStatus: Folder.ChildSequence<Child> {
         var sequence = self
         sequence.includeStatus = true
         return sequence
     }
 }
 
-public extension PLFile.Folder.ChildSequence {
+public extension Folder.ChildSequence {
     /// move all of the fileSystem with in this sequence
-    func move(to folder: PLFile.Folder) throws {
+    func move(to folder: Folder) throws {
         try forEach { try $0.move(to: folder) }
     }
     
@@ -80,7 +80,7 @@ public extension PLFile.Folder.ChildSequence {
 }
 
 //MARK: - Child Iterator
-extension PLFile.Folder.ChildIterator: IteratorProtocol {
+extension Folder.ChildIterator: IteratorProtocol {
     public mutating func next() -> Child? {
         guard index < itemNames.count else {
             guard var item = itemIterators.first else { return nil }
@@ -103,10 +103,10 @@ extension PLFile.Folder.ChildIterator: IteratorProtocol {
         let child = childStore as? Child
         
         if recursive {
-            let childFolder = (child as? PLFile.Folder) ?? (try? PLFile.Folder(store: Store(path: Path(childPath), fileManager: fileManager)))
+            let childFolder = (child as? Folder) ?? (try? Folder(store: Store(path: Path(childPath), fileManager: fileManager)))
             
             if let childFolder = childFolder {
-                let iteratorItem = PLFile.Folder.ChildIterator<Child> (
+                let iteratorItem = Folder.ChildIterator<Child> (
                     folder: childFolder,
                     fileManager: fileManager,
                     recursive: true,

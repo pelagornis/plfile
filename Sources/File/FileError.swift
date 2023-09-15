@@ -1,7 +1,7 @@
 import Foundation
 
 /// Error can be thrown by PLFile
-public enum PLFileError: Error {
+public enum FileError: Error {
     /// File Create Error
     case fileCreateError(path: Path)
     /// Verify that file path is empty.
@@ -28,7 +28,7 @@ public enum PLFileError: Error {
     case missing(path: Path)
 }
 
-extension PLFileError {
+extension FileError {
     /// PLFile Error Return Error Context
     public var error: Error? {
         switch self {
@@ -80,7 +80,7 @@ extension PLFileError {
 }
 
 //MARK: - CustomStringConvertible
-extension PLFileError: CustomStringConvertible {
+extension FileError: CustomStringConvertible {
     /// Representation of `self`
     public var description: String {
         return String(describing: type(of: self)) + ": (\(message)"
@@ -88,7 +88,7 @@ extension PLFileError: CustomStringConvertible {
 }
 
 //MARK: - CustomDebugStringConvertible
-extension PLFileError: CustomDebugStringConvertible {
+extension FileError: CustomDebugStringConvertible {
     /// Representation of instance, suitable for debugging
     public var debugDescription: String {
         guard let error = error else {

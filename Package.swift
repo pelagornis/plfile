@@ -6,20 +6,20 @@ let package = Package(
     platforms: [.macOS(.v10_15)],
     products: [
         .library(
-            name: "PLFile",
-            targets: ["PLFile"]),
+            name: "File",
+            targets: ["File"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-docc-plugin.git", from: "1.3.0")
     ],
     targets: [
         .target(
-            name: "PLFile",
+            name: "File",
             dependencies: []
         ),
         .testTarget(
-            name: "PLFileTests",
-            dependencies: ["PLFile"]
+            name: "FileTests",
+            dependencies: ["File"]
         )
     ]
 )
