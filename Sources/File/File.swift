@@ -12,7 +12,7 @@ public struct File: FileSystem {
 /// Property
 extension File {
     /// PLFile File Type
-    public static var type: PLFileType {
+    public static var type: FileType {
         return .file
     }
 }

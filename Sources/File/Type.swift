@@ -1,5 +1,5 @@
 /// The type of a file or folder.
-public enum PLFileType {
+public enum FileType {
     /// Responsible for the file function among the types of PLFile.
     case file 
 

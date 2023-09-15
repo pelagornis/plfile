@@ -11,7 +11,7 @@ public struct Folder: FileSystem {
 
 extension Folder {
     /// PLFile Folder Type
-    public static var type: PLFileType {
+    public static var type: FileType {
         return .folder
     }
 
