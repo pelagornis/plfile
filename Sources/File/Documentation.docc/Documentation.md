@@ -1,4 +1,4 @@
-# ``PLFile``
+# ``File``
 
 PLFile is a library for File Management from Swift
 
