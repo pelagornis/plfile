@@ -38,10 +38,12 @@ let path = Path("/Users/ji-hoonahn/Desktop/") // example
 
 Easy access path.
 ```swift
-Path.root
-Path.home
 Path.current
+Path.root
+Path.library
 Path.temporary
+Path.home
+Path.documents
 ```
 
 Create, Write file and Folder!
