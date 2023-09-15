@@ -26,7 +26,7 @@ import File
 
 ## Documentation
 The documentation for releases and ``main`` are available here:
-- [``main``](https://pelagornis.github.io/plfile/main/documentation/plfile)
+- [``main``](https://pelagornis.github.io/plfile/main/documentation/file)
 
 
 ## Using
