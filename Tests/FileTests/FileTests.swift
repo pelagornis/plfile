@@ -1,11 +1,11 @@
 import XCTest
-@testable import PLFile
+@testable import File
 
-final class PLFileTests: XCTestCase {
-    private var folder: PLFile.Folder!
+final class FileTests: XCTestCase {
+    private var folder: Folder!
     override func setUp() {
         super.setUp()
-        folder = try! PLFile.Folder(path: .home).createSubfolder(at: ".plfileTest")
+        folder = try! Folder(path: .home).createSubfolder(at: ".plfileTest")
         try! folder.empty()
     }
     
