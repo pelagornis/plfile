@@ -16,7 +16,7 @@ let package = Package(
 Then import the PLFile from thr location you want to use.
 
 ```swift
-import PLFile
+import File
 ```
 
 ## Using PLFile
@@ -38,7 +38,7 @@ Easily create files and folders
 
 ```swift
 let path = Path.home
-let folder = try! PLFile.Folder(path: path)
+let folder = try! Folder(path: path)
 let file = try! folder.createFile(at: "test.swift")
 try! file.write("print(1)")
 ```
