@@ -95,7 +95,12 @@ public struct Path {
     var safeRawValue: String {
         return rawValue.isEmpty ? "." : rawValue
     }
-    
+
+    /// Standardized path string value
+    public var standardRawValue: String {
+        return (self.rawValue as NSString).standardizingPath
+    }
+
     /// Resolving path '..'.
     fileprivate func safeComponents(_ component: [Path]) -> [Path] {
         var result = false
@@ -118,8 +123,12 @@ public struct Path {
     }
     
     /// Initalizer with swift path.
-    public init(_ path: String, _ fileManager: FileManager = .default) {
-        self.rawValue = path
+    public init(_ path: String, expandingTilde: Bool = false, _ fileManager: FileManager = .default) {
+        if expandingTilde {
+            self.rawValue = (path as NSString).expandingTildeInPath
+        } else {
+            self.rawValue = path
+        }
     }
     
     private static func search(
@@ -135,6 +144,12 @@ public struct Path {
     }
 }
 
+extension Path: RawRepresentable {
+    public init?(rawValue: String) {
+        self.rawValue = rawValue
+    }
+}
+
 extension Path: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
         self.init(value)
@@ -144,6 +159,13 @@ extension Path: ExpressibleByStringLiteral {
     }
     public init(extendedGraphemeClusterLiteral value: String) {
         self.init(value)
+    }
+}
+
+extension Path: CustomDebugStringConvertible {
+    /// A textual representation of `self`, suitable for debugging.
+    public var debugDescription: String {
+        return "Path(\(rawValue.debugDescription))"
     }
 }
 

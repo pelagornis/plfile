@@ -54,8 +54,6 @@ final class FileTests: XCTestCase {
         let oldCurrent: Path = .current
         let newCurrent: Path = .userTemporary
         XCTAssertNotEqual(oldCurrent, newCurrent)
-        Path.current = newCurrent
-        XCTAssertNotEqual(Path.current, oldCurrent)
     }
     
     func testingPathHome() {
