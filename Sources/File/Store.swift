@@ -18,14 +18,14 @@ public final class Store<fileSystem: FileSystem> {
 
 extension Store {
     /// Move FileSystem.
-    func move(to newPath: String) throws {
+    func move(to newPath: Path) throws {
         do {
-            try fileManager.moveItem(atPath: path.rawValue, toPath: newPath)
+            try fileManager.moveItem(atPath: path.rawValue, toPath: newPath.rawValue)
             switch fileSystem.type {
             case .file:
-                path.rawValue = newPath
+                path.rawValue = newPath.rawValue
             case .folder:
-                path.rawValue = newPath.appendSafeSuffix("/")
+                path.rawValue = newPath.rawValue.appendSafeSuffix("/")
             }
         } catch {
             throw FileError.moveError(path: path, error: error)
@@ -33,9 +33,9 @@ extension Store {
     }
 
     /// Copy FileSystem.
-    func copy(to newPath: String) throws {
+    func copy(to newPath: Path) throws {
         do {
-            try fileManager.copyItem(atPath: path.rawValue, toPath: newPath)
+            try fileManager.copyItem(atPath: path.rawValue, toPath: newPath.rawValue)
         } catch {
             throw FileError.copyError(path: path, error: error)
         }
@@ -58,17 +58,20 @@ extension Store {
         case .folder:
             try storeFolderEmpty()
         }
+
         if path.rawValue.hasPrefix("~") {
             let home = ProcessInfo.processInfo.environment["HOME"]!
             path.rawValue = home + path.rawValue.dropFirst()
         }
+
         while let parentRange = path.rawValue.range(of: "../") {
             let folderPath = path.rawValue[..<parentRange.lowerBound]
             let parentsPath = Path(String(folderPath)).parents
             try filesystemExists()
-            
+
             path.rawValue.replaceSubrange(..<parentRange.upperBound, with: parentsPath.rawValue)
         }
+
         try filesystemExists()
     }
 
