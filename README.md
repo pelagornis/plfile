@@ -49,16 +49,16 @@ Path.documents
 Create, Write file and Folder!
 ```swift
 let path = Path.home
-let folder = try! Folder(path: path)
-let file = try! folder.createFile(at: "test.swift")
-try! file.write("print(1)")
+let folder = try? Folder(path: path)
+let file = try? folder.createFile(at: "test.swift")
+try? file.write("print(1)")
 ```
 
 And you can delete files and folders if you want.
 
 ```swift
-try! file.delete()
-try! folder.delete()
+try? file.delete()
+try? folder.delete()
 ```
 
 ## License
