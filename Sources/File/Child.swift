@@ -8,6 +8,7 @@ public extension Folder {
         var recursive: Bool
         var includeStatus: Bool
     }
+
     struct ChildIterator<Child: FileSystem> {
         private let folder: Folder
         private let fileManager: FileManager
@@ -17,7 +18,7 @@ public extension Folder {
         private var index = 0
         private var itemIterators = [ChildIterator<Child>]()
         private lazy var itemNames = loadingItemNames()
-        
+
         init(
             folder: Folder,
             fileManager: FileManager,
@@ -54,7 +55,6 @@ extension Folder.ChildSequence: CustomStringConvertible {
 }
 
 public extension Folder.ChildSequence {
-    
     var recursiveStatus: Folder.ChildSequence<Child> {
         var sequence = self
         sequence.recursive = true
@@ -72,7 +72,7 @@ public extension Folder.ChildSequence {
     func move(to folder: Folder) throws {
         try forEach { try $0.move(to: folder) }
     }
-    
+
     /// delete all of the fileSystem with in this sequence
     func delete() throws {
         try forEach { try $0.delete() }
@@ -93,11 +93,11 @@ extension Folder.ChildIterator: IteratorProtocol {
         }
         let name = itemNames[index]
         index += 1
-        
+
         if !includeStatus {
             guard !name.hasPrefix(".") else { return next() }
         }
-        
+
         let childPath = folder.store.path.rawValue + name.removeSafePrefix("/")
         let childStore = try? Store<Child> (path: Path(childPath), fileManager: fileManager)
         let child = childStore as? Child
@@ -116,10 +116,10 @@ extension Folder.ChildIterator: IteratorProtocol {
                 itemIterators.append(iteratorItem)
             }
         }
-        
+
         return child ?? next()
     }
-    
+
     fileprivate mutating func loadingItemNames() -> [String] {
         let contents = try? fileManager.contentsOfDirectory(atPath: folder.store.path.rawValue)
         let names = contents?.sorted() ?? []

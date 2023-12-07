@@ -19,7 +19,6 @@ extension File {
 
 /// Method
 public extension File {
-    
     /// write binary data in the file and replace current contexts
     func write(_ data: Data) throws {
         do {

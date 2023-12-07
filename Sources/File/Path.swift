@@ -4,38 +4,38 @@ import Foundation
 public struct Path {
     /// Root path.
     public static let root = Path("/")
-    
+
     /// Home path.
     public static var home = Path("~")
-    
+
     /// Documents path.
     public static var documents: Path {
         return search(.documentDirectory)
     }
-    
+
     /// Library path.
     public static var library: Path {
         return search(.libraryDirectory)
     }
-    
+
     /// user's temporary directory path.
     public static var userTemporary: Path {
         return Path(NSTemporaryDirectory()).standardized
     }
-    
+
     /// System Temporary path.
     public static var temporary = Path(NSTemporaryDirectory())
-    
+
     /// Standardized path
     public var standardized: Path {
         return Path((self.rawValue as NSString).standardizingPath)
     }
-    
+
     /// Resolving all symlinks path.
     public var resolved: Path {
         return Path((self.rawValue as NSString).resolvingSymlinksInPath)
     }
-    
+
     /// Absolute path.
     public var absolutePath: Path {
         if rawValue.hasPrefix("/") {
@@ -44,7 +44,7 @@ public struct Path {
             return Path(Path.current.rawValue + self.rawValue).standardized
         }
     }
-    
+
     /// Parent path.
     public var parents: Path {
         if rawValue.hasPrefix("/") {
@@ -62,7 +62,7 @@ public struct Path {
             }
         }
     }
-    
+
     /// Path component.
     public var pathComponent: [Path] {
         if rawValue.isEmpty || rawValue == "." { return .init() }
@@ -78,7 +78,7 @@ public struct Path {
             return safeComponents(safeComponent)
         }
     }
-    
+
     /// Current path
     public static var current: Path {
         get {
@@ -87,10 +87,10 @@ public struct Path {
             FileManager.default.changeCurrentDirectoryPath(newValue.safeRawValue)
         }
     }
-    
+
     /// Stored Path String value.
     public var rawValue: String
-    
+
     /// Safe Raw Value with path.
     var safeRawValue: String {
         return rawValue.isEmpty ? "." : rawValue
@@ -116,12 +116,12 @@ public struct Path {
         }
         return result ? safeComponents(safecomponent) : safecomponent
     }
-    
+
     /// Initalizer.
     public init() {
         self = .root
     }
-    
+
     /// Initalizer with swift path.
     public init(_ path: String, expandingTilde: Bool = false, _ fileManager: FileManager = .default) {
         if expandingTilde {
@@ -130,7 +130,7 @@ public struct Path {
             self.rawValue = path
         }
     }
-    
+
     private static func search(
         _ searchPath: FileManager.SearchPathDirectory,
         domain: FileManager.SearchPathDomainMask = .userDomainMask,

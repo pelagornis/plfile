@@ -31,6 +31,7 @@ extension Store {
             throw FileError.moveError(path: path, error: error)
         }
     }
+
     /// Copy FileSystem.
     func copy(to newPath: String) throws {
         do {
@@ -39,6 +40,7 @@ extension Store {
             throw FileError.copyError(path: path, error: error)
         }
     }
+
     /// Delete FileSystem.
     func delete() throws {
         do {
@@ -47,6 +49,7 @@ extension Store {
             throw FileError.deleteError(path: path, error: error)
         }
     }
+
     /// Path translate.
     private func translatePath() throws {
         switch fileSystem.type {
@@ -68,12 +71,14 @@ extension Store {
         }
         try filesystemExists()
     }
+
     /// Verify that the store file is empty.
     private func storeFileEmpty() throws {
         if path.rawValue.isEmpty {
             throw FileError.filePathEmpty(path: path)
         }
     }
+
     /// Verify that the store folder is empty.
     private func storeFolderEmpty() throws {
         if path.rawValue.isEmpty {
@@ -83,22 +88,23 @@ extension Store {
             path.rawValue += "/"
         }
     }
+
     /// File System Exists.
     private func filesystemExists() throws {
         var isFolder: ObjCBool = false
         var fileSystemStatus: Bool = false
-        
+
         if !fileManager.fileExists(atPath: path.rawValue, isDirectory: &isFolder) {
             fileSystemStatus = false
         }
-        
+
         switch fileSystem.type {
         case .file:
             fileSystemStatus = !isFolder.boolValue
         case .folder:
             fileSystemStatus = isFolder.boolValue
         }
-        
+
         guard fileSystemStatus else {
             throw FileError.missing(path: path)
         }
@@ -115,19 +121,21 @@ extension Store where fileSystem == Folder {
             includeStatus: false
         )
     }
-    
+
     /// Subfolder information.
     func subfolder(at folderPath: Path) throws -> Folder {
         let folderPath = path.rawValue + folderPath.rawValue.removeSafePrefix("/")
         let store = try Store(path: Path(folderPath), fileManager: fileManager)
         return Folder(store: store)
     }
+
     /// File information
     func file(at filePath: Path) throws -> File {
         let filePath = path.rawValue + filePath.rawValue.removeSafePrefix("/")
         let store = try Store<File>(path: Path(filePath), fileManager: fileManager)
         return File(store: store)
     }
+
     /// Create subfolder to path.
     func createSubfolder(at folderPath: Path) throws -> Folder {
         let folderPath = path.rawValue + folderPath.rawValue.removeSafePrefix("/")
@@ -143,6 +151,7 @@ extension Store where fileSystem == Folder {
             throw FileError.folderCreateError(path: path, error: error)
         }
     }
+
     /// Create File to path.
     func createFile(at filePath: Path, contents: Data? = nil) throws -> File {
         let filePath = path.rawValue + filePath.rawValue.removeSafePrefix("/")
