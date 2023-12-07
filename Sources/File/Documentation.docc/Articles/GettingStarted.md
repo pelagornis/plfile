@@ -8,7 +8,7 @@ PLFile was deployed as Swift Package Manager. Package to install in a project. A
 let package = Package(
     ...
     dependencies: [
-        .package(url: "https://github.com/pelagornis/plfile.git", from: "1.0.5")
+        .package(url: "https://github.com/pelagornis/plfile.git", from: "1.0.6")
     ],
     ...
 )
