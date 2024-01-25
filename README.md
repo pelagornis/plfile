@@ -3,7 +3,7 @@
 ![SPM](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)
 ![Swift](https://img.shields.io/badge/Swift-5.7-orange.svg)
 [![License](https://img.shields.io/github/license/pelagornis/plfile)](https://github.com/pelagornis/plfile/blob/main/LICENSE)
-![Platform](https://img.shields.io/badge/platforms-macOS%2010.5-red)
+![Platform](https://img.shields.io/badge/platforms-iOS%2013.0%7C%20tvOS%2013.0%7C%20macOS%2010.15%7C%20watchOS%206.0-red.svg)
 
 📁 Pelagornis File Management Library
 
