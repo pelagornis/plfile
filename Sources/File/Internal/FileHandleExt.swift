@@ -2,13 +2,11 @@ import Foundation
 
 extension FileHandle {
 
-    /**
-     Seeks to the end of the file handle.
-
-     - Returns: The current offset from the beginning of the file.
-
-     - Note: `seekToEndOfFile()` is deprecated in macOS 10.15.4, so this method provides a replacement.
-     */
+    /// Seeks to the end of the file handle.
+    ///
+    /// - Returns: The current offset from the beginning of the file.
+    ///
+    /// - Note: `seekToEndOfFile()` is deprecated in macOS 10.15.4, so this method provides a replacement.
     func seekToEndFactory() -> UInt64 {
         if #available(macOS 10.15.4, *) {
             do {
@@ -21,13 +19,11 @@ extension FileHandle {
         }
     }
     
-    /**
-     Writes the given data to the file handle.
-
-     - Parameter data: The data to write.
-
-     - Note: `write(_ data: Data)` is deprecated in macOS 10.15.4, so this method provides a replacement.
-     */
+    ///  Writes the given data to the file handle.
+    ///
+    /// - Parameter data: The data to write.
+    ///
+    /// - Note: `write(_ data: Data)` is deprecated in macOS 10.15.4, so this method provides a replacement.
     func writeFactory(_ data: Data) {
         if #available(macOS 10.15.4, *) {
             do {
@@ -40,11 +36,9 @@ extension FileHandle {
         }
     }
     
-    /**
-     Closes the file handle.
-
-     - Note: `closeFile()` is deprecated in macOS 10.15, so this method provides a replacement.
-     */
+    /// Closes the file handle.
+    ///
+    /// - Note: `closeFile()` is deprecated in macOS 10.15, so this method provides a replacement.
     func closeFileFactory() {
         if #available(macOS 10.15, *) {
             do {

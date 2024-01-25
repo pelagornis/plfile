@@ -1,6 +1,6 @@
 import Foundation
 
-    /// File functionality in PLFile
+/// File functionality in PLFile
 public struct File: FileSystem {
     public var store: Store<File>
 
@@ -9,7 +9,7 @@ public struct File: FileSystem {
     }
 }
 
-/// Property
+// MARK: - Property
 extension File {
     /// PLFile File Type
     public static var type: FileType {
@@ -17,7 +17,7 @@ extension File {
     }
 }
 
-/// Method
+// MARK: - Function
 public extension File {
     /// write binary data in the file and replace current contexts
     func write(_ data: Data) throws {

@@ -1,6 +1,6 @@
 import Foundation
 
-//MARK: - Child
+// MARK: - Child
 public extension Folder {
     struct ChildSequence<Child: FileSystem> {
         let folder: Folder
@@ -35,7 +35,7 @@ public extension Folder {
     }
 }
 
-//MARK: - Child Sequence
+// MARK: - Child Sequence
 extension Folder.ChildSequence: Sequence {
     public func makeIterator() -> Folder.ChildIterator<Child>  {
         return Folder.ChildIterator(
@@ -79,7 +79,7 @@ public extension Folder.ChildSequence {
     }
 }
 
-//MARK: - Child Iterator
+// MARK: - Child Iterator
 extension Folder.ChildIterator: IteratorProtocol {
     public mutating func next() -> Child? {
         guard index < itemNames.count else {

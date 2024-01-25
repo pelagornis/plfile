@@ -79,7 +79,7 @@ extension FileError {
     }
 }
 
-//MARK: - CustomStringConvertible
+// MARK: - CustomStringConvertible
 extension FileError: CustomStringConvertible {
     /// Representation of `self`
     public var description: String {
@@ -87,7 +87,7 @@ extension FileError: CustomStringConvertible {
     }
 }
 
-//MARK: - CustomDebugStringConvertible
+// MARK: - CustomDebugStringConvertible
 extension FileError: CustomDebugStringConvertible {
     /// Representation of instance, suitable for debugging
     public var debugDescription: String {
