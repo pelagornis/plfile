@@ -8,7 +8,7 @@ extension FileHandle {
     ///
     /// - Note: `seekToEndOfFile()` is deprecated in macOS 10.15.4, so this method provides a replacement.
     func seekToEndFactory() -> UInt64 {
-        if #available(macOS 10.15.4, *) {
+        if #available(iOS 13.4, macOS 10.15.4, tvOS 13.4, watchOS 6.2, visionOS 1.0, *) {
             do {
                 return try self.seekToEnd()
             } catch {
@@ -25,7 +25,7 @@ extension FileHandle {
     ///
     /// - Note: `write(_ data: Data)` is deprecated in macOS 10.15.4, so this method provides a replacement.
     func writeFactory(_ data: Data) {
-        if #available(macOS 10.15.4, *) {
+        if #available(iOS 13.4, macOS 10.15.4, tvOS 13.4, watchOS 6.2, visionOS 1.0, *) {
             do {
                 try self.write(contentsOf: data)
             } catch {
@@ -40,7 +40,7 @@ extension FileHandle {
     ///
     /// - Note: `closeFile()` is deprecated in macOS 10.15, so this method provides a replacement.
     func closeFileFactory() {
-        if #available(macOS 10.15, *) {
+        if #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, visionOS 1.0, *) {
             do {
                 try self.close()
             } catch { return }
