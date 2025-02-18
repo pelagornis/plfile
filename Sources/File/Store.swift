@@ -156,7 +156,7 @@ extension Store where fileSystem == Folder {
     }
 
     /// Create File to path.
-    func createFile(at filePath: Path, contents: Data? = nil) throws -> File {
+    func createFile(at filePath: Path, contents: Data?) throws -> File {
         let filePath = path.rawValue + filePath.rawValue.removeSafePrefix("/")
         let parentPath = Path(filePath).parents.rawValue
         if parentPath != path.rawValue {
@@ -169,10 +169,10 @@ extension Store where fileSystem == Folder {
                 throw FileError.folderCreateError(path: Path(parentPath), error: error)
             }
         }
-        guard fileManager.createFile(atPath: filePath, contents: contents) else {
+        guard fileManager.createFile(atPath: filePath, contents: contents),
+            let store = try? Store<File>(path: Path(filePath), fileManager: fileManager) else {
             throw FileError.fileCreateError(path: Path(filePath))
         }
-        let store = try Store<File>(path: Path(filePath), fileManager: fileManager)
         return File(store: store)
     }
 }

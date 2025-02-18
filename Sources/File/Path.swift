@@ -6,7 +6,14 @@ public struct Path {
     public static let root = Path("/")
 
     /// Home path.
-    public static var home = Path("~")
+    public static var home: Path {
+        return Path(NSHomeDirectory())
+    }
+    
+    /// System Temporary path.
+    public static var temporary: Path {
+        return Path(NSTemporaryDirectory())
+    }
 
     /// Documents path.
     public static var documents: Path {
@@ -22,9 +29,6 @@ public struct Path {
     public static var userTemporary: Path {
         return Path(NSTemporaryDirectory()).standardized
     }
-
-    /// System Temporary path.
-    public static var temporary = Path(NSTemporaryDirectory())
 
     /// Standardized path
     public var standardized: Path {

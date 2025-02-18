@@ -12,55 +12,55 @@ public protocol FileSystem: Equatable, CustomStringConvertible {
     init(store: Store<Self>)
 }
 
-public extension FileSystem {
+extension FileSystem {
     /// FileSystem Description
-    var description: String {
+    public var description: String {
         return "(name: \(name), path: \(store.path.rawValue))"
     }
 
     /// FileSystem URL
-    var url: URL {
+    public var url: URL {
         return URL(fileURLWithPath: store.path.rawValue)
     }
 
     /// FileSystem Name
-    var name: String {
+    public var name: String {
         return url.pathComponents.last!
     }
 
     /// File Extension in File System
-    var `extension`: String? {
+    public var `extension`: String? {
         let components = name.split(separator: ".")
         guard components.count > 1 else { return nil }
         return String(components.last!)
     }
 
     /// The date when the item at this FileSystem was created
-    var creationDate: Date? {
+    public var creationDate: Date? {
         return store.attributes[.creationDate] as? Date
     }
 
     /// The date when the item at this FileSystem was last modified
-    var modificationDate: Date? {
+    public var modificationDate: Date? {
         return store.attributes[.modificationDate] as? Date
     }
 
     /// Initalizer path inside FileSystem
-    init(path: Path) throws {
+    public init(path: Path) throws {
         try self.init(store: Store(
             path: path,
             fileManager: .default
         ))
     }
 
-    static func == (lhs: Self, rhs: Self) -> Bool {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.description == rhs.description
     }
 }
 
-public extension FileSystem {
+extension FileSystem {
     /// Rename this FileSystem, keeping its exist `extension`
-    func rename(to newName: String, keepExtensions: Bool = true) throws {
+    public func rename(to newName: String, keepExtensions: Bool = true) throws {
         var newName = newName
         if keepExtensions {
             `extension`.map {
@@ -71,25 +71,25 @@ public extension FileSystem {
     }
 
     /// Move this File System to a new parents Folder
-    func move(to newParent: Folder) throws {
+    public func move(to newParent: Folder) throws {
         let path = Path(newParent.store.path.rawValue + name)
         try store.move(to: path)
     }
 
     /// Copy the content of this File System to a given folder
-    func copy(to folder: Folder) throws -> Self {
+    public func copy(to folder: Folder) throws -> Self {
         let path = Path(folder.store.path.rawValue + name)
         try store.copy(to: path)
         return try Self(path: path)
     }
 
     /// Delete this FileSystem.
-    func delete() throws {
+    public func delete() throws {
         try store.delete()
     }
 
     /// FileSystem `FileManager` Setting
-    func managedBy(_ manager: FileManager) throws -> Self {
+    public func managedBy(_ manager: FileManager) throws -> Self {
         return try Self(store: Store(
             path: store.path,
             fileManager: manager
