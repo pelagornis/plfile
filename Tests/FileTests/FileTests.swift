@@ -3,9 +3,10 @@ import XCTest
 
 final class FileTests: XCTestCase {
     private var folder: Folder!
+    
     override func setUp() {
         super.setUp()
-        folder = try? Folder(path: .home).createSubfolder(at: ".plfileTest")
+        folder = try! Folder(path: .home).createSubfolder(at: ".plfileTest")
         try! folder.empty()
     }
     
@@ -24,18 +25,18 @@ final class FileTests: XCTestCase {
     }
     
     func testingFileWrite() {
-        let file = try! folder.createFile(at: "testWrite.swift")
-        try! file.write("print(1)")
+        let file = try? folder.createFile(at: "testWrite.swift")
+        try? file?.write("print(1)")
         
-        try XCTAssertEqual(String(data: file.read(), encoding: .utf8), "print(1)")
+        try XCTAssertEqual(String(data: file!.read(), encoding: .utf8), "print(1)")
     }
     
     func testingFileMove() {
-        let originFolder = try! folder.createSubfolder(at: "folderA")
-        let targetFolder = try! folder.createSubfolder(at: "folderB")
+        let originFolder = try? folder.createSubfolder(at: "folderA")
+        let targetFolder = try? folder.createSubfolder(at: "folderB")
         
-        try! originFolder.move(to: targetFolder)
-        XCTAssertEqual(originFolder.store.path.rawValue, folder.store.path.rawValue + "folderB/folderA/" )
+        try? originFolder?.move(to: targetFolder!)
+        XCTAssertEqual(originFolder?.store.path.rawValue, folder.store.path.rawValue + "folderB/folderA/" )
     }
     
     func testingPathStringLiteralConvertible() {
@@ -58,8 +59,7 @@ final class FileTests: XCTestCase {
     
     func testingPathHome() {
         let home = Path.home
-        let pathHome = Path("~")
-        XCTAssertEqual(home, pathHome)
+        XCTAssertEqual(home.rawValue, NSHomeDirectory())
     }
 
     func testingPathDocuments() {
